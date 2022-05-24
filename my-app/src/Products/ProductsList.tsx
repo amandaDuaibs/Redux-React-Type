@@ -1,59 +1,25 @@
 import React from "react";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { getProductsSelector } from "./Product.slice";
 
 interface ProductsListProps{
 
 }
 
-interface Product{
-    titulo: string;
-    preco: number;
-    id: string; 
-    autor: string;
-    idioma:string;
-}
-
-const initialProduts =[
-    {   
-        titulo: 'Origem', 
-        preco: '$40,00',
-        id: 'acb', 
-        autor:'Dan Brown',
-        idioma:'Português'
-    },
-    {   
-        titulo: 'Código daVince', 
-        preco: '$30,00',
-        id: 'acb', 
-        autor:'Dan Brown',
-        idioma:'Português'
-    },
-    {   
-        titulo: 'Anjos e Demônios', 
-        preco: '$42,00',
-        id: 'acb', 
-        autor:'Dan Brown',
-        idioma:'Português'
-    },
-]
 
 const ProductsList: React.FC<ProductsListProps>=({})=>{
-    const [products, setProducts]= useState(initialProduts)
+    const products = useSelector(getProductsSelector)
+
     return(
         <div>
             <h2>Lista de Livros</h2>
-            {products.map(product => 
+            {products.map((product: { id: React.Key | null | undefined; titulo: any; preco: any; }) => 
                 <div key={product.id}>
                     <span>{`${product.titulo}: ${product.preco}`}</span>
                 </div>
             )}
-            <button onClick={()=> setProducts(prevProductd => [{
-                 titulo: 'inferno', 
-                 preco: '$50,00',
-                 id: 'acb', 
-                 autor:'Dan Brown',
-                 idioma:'Português'
-                }, ...prevProductd])}>Novo Produto</button>
+           
         </div>
     );
 }
