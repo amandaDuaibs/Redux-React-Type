@@ -1,5 +1,5 @@
 import React from "react";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { bindActionCreators, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../app/store";
 
 
@@ -40,11 +40,14 @@ const productSlice=createSlice({
     initialState,
     reducers:{
         addProduct: (state, action: PayloadAction<Product>)=>{
-            return [action.payload, ...state]
-        }
-    }
+           // return [action.payload, ...state]
+           state.push(action.payload)
+        },
+        removeProduct: (state, action: PayloadAction<string>) => state.filter(product=> product.id !== action.payload )}
+        
+    
 })
 
-export const{ addProduct} = productSlice.actions;
+export const{ addProduct, removeProduct} = productSlice.actions;
 export const getProductsSelector =(state:RootState) => state.products
 export default productSlice.reducer;
